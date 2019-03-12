@@ -1,0 +1,109 @@
+/*
+2. Napisaæ program, który generuje liczby pseudolosowe z zakresu [-10,0; 10,0] dopóty, dopóki nie zostanie
+wylosowana liczba 0,0. Co wa¿ne – liczby powinny byæ zmiennopozycyjne z dok³adnoœci¹ do pierwszego
+miejsca po przecinku (tylko i wy³¹cznie). W wyniku wykonania programu (bez wykorzystania tablic),
+powinna zostaæ wyœwietlona suma co drugiej z wylosowanych liczb (zaczynaj¹c od pierwszej) oraz œrednia
+arytmetyczna liczb dodatnich, podzielnych przez trzy.
+Dodatkowo, jeszcze raz powinno zostaæ wylosowanych (ca³kowite, zakres [-10, 10]) tyle samo liczb, ile
+wylosowano w pierwszej pêtli, a w wyniku powinno zostaæ wyœwietlone, ile z tych liczb by³o wiêkszych od
+najwiêkszej liczby wylosowanej w pierwszej pêtli oraz ró¿nica pomiêdzy œredni¹ arytmetyczn¹ liczb
+wylosowanych w pierwszej pêtli, a œredni¹ arytmetyczn¹ liczb wylosowanych w drugiej pêtli, ¿e
+wskazaniem, która pêtla mia³a wy¿sz¹ œredni¹.
+Uwaga,
+nie nale¿y u¿ywaæ (importowaæ) ¿adnych dodatkowych bibliotek, poza klas¹ niezbêdn¹ do obs³ugi
+losowania liczb. W programie nie nale¿y u¿ywaæ tablic
+*/
+
+
+package javaapplication2;
+import java.util.Random;
+
+public class JavaApplication2 {
+
+    public static void main(String[] args) {
+       
+        long licznik = 0;
+        long licznik2 = 0;
+        long ileWiekszych = 0;
+        long licznikSredniejDziwnej = 0;
+        float suma = 0;
+        float srednia = 0;
+        float srednia2 = 0;
+        float sredniaDziwna = 0;
+        float roznicaSrednich = 0;
+        float maximum = -10.0f;
+        
+        System.out.println("-------Pierwsza petla-------");
+        for(float i = 1 ;i != 0.0 ;licznik++)
+        {
+            //generowanie liczb
+            Random r = new Random();
+            i = (float)(r.nextInt(20)-10 + r.nextInt(11)*0.1);
+            //System.out.println(i);
+            
+            srednia = srednia +i;
+            
+            if(i > maximum)
+            {
+                maximum = i;
+            }
+            if(licznik % 2 != 0)
+            {
+                suma = suma + i;
+            }
+            if(i > 0 && i % 3 == 0)
+            {
+                sredniaDziwna = sredniaDziwna + i;
+                licznikSredniejDziwnej++;
+            }
+        }
+        System.out.println("Suma co drugiej: " + suma); 
+        if(licznikSredniejDziwnej != 0)
+        {
+            sredniaDziwna = sredniaDziwna/(float)licznikSredniejDziwnej;
+            System.out.println("Srednia liczb dodatnich podzielnych przez 3: " + sredniaDziwna);    
+        }
+        else
+        {
+            System.out.println("Srednia liczb dodatnich podzielnych przez 3: brak takich liczb!"); 
+        }
+        srednia = srednia/(float)licznik;
+        
+        System.out.println("-------Druga petla-------");
+         for(int i; licznik2 < licznik ;licznik2++)
+        {
+            //generowanie liczb
+            Random r = new Random();
+            i = r.nextInt(21)-10;
+            //System.out.println(i);
+            
+            srednia2 = srednia2 + i;
+            
+            if(i > maximum)
+            {
+                ileWiekszych++;
+            }
+        }
+         srednia2 = srednia2/(float)licznik2;
+         
+         System.out.println("Liczba liczb wiekszych od najwiekszej z pierwsej petli: " + ileWiekszych);
+         if(srednia > srednia2)
+         {
+             roznicaSrednich = srednia - srednia2;
+             System.out.println("Wieksza jest srednia pierwszej petli.");
+             System.out.println("Roznica srednich: " + roznicaSrednich);
+         }
+         else if(srednia2 > srednia)
+         {
+             roznicaSrednich = srednia2 - srednia;
+             System.out.println("Wieksza jest srednia drugiej petli.");
+             System.out.println("Roznica srednich: " + roznicaSrednich);
+         }
+         else
+         {
+             System.out.println("Srednie sa rowne");
+             System.out.println("Roznica srednich: 0");
+         }
+    }
+    
+}

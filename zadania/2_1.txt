@@ -1,0 +1,72 @@
+/*
+1. Napisaæ program, który tworzy dwuwymiarow¹ tablicê liczb ca³kowitych o losowej wielkoœci wymiaru (wylosowanej
+z zakresu [50, 100] i podzielnej przez 4), gdzie liczba wierszy jest równa liczbie kolumn. Nastêpnie tablica zostaje
+wype³niona liczbami losowymi, z wyj¹tkiem elementów znajduj¹cych siê na przek¹tnych. Liczby maj¹ byæ losowane z
+zakresu [a, b), gdzie liczby a i b podawane s¹ przez u¿ytkownika. Wartoœci na przek¹tnych maj¹ byæ wype³nione w
+losowym uk³adzie w 75% przypadków cyfr¹ 1, a w pozosta³ych 25% przypadków wartoœci¹ -1.
+Program powinien wyœwietliæ na ekran liczbê komórek, których wartoœæ jest mniejsza od iloczynu indeksu wiesza i
+kolumny tej komórki.
+*/
+
+
+package javaapplication5;
+import java.util.Random;
+import java.util.Scanner;
+
+public class JavaApplication5 {
+
+    public static void main(String[] args) {
+       
+        int iloscKomorek = 0;
+        int[][] tablicaKwadratowa;
+        int wymiar = 1;
+        Random r = new Random ();
+        //przypisanie wymiaru
+        while(wymiar % 4 != 0)
+        {
+            wymiar = (r.nextInt(50) + 50);
+        }
+        tablicaKwadratowa = new int[wymiar][wymiar];
+        
+        //wypelnianie tablicy
+        System.out.print("Podaj zakres dolny losowania: ");
+        Scanner strumien1 = new Scanner(System.in);
+        int a = strumien1.nextInt();
+        System.out.print("Podaj zakres gorny losowania: ");
+        Scanner strumien2 = new Scanner(System.in);
+        int b = strumien2.nextInt();
+        for (int wiersz = 0; wiersz < tablicaKwadratowa.length; wiersz++){
+            for (int kolumna = 0; kolumna < tablicaKwadratowa[wiersz].length; kolumna++){
+                if(kolumna != wiersz)
+                {
+                    tablicaKwadratowa[wiersz][kolumna] = (r.nextInt(b-a) + (a));
+                }
+                else if (r.nextInt(4) == 0)
+                {
+                    tablicaKwadratowa[wiersz][kolumna] = -1;
+                }
+                else
+                {
+                    tablicaKwadratowa[wiersz][kolumna] = 1;
+                }
+                //iloscKomorek
+                if(tablicaKwadratowa[wiersz][kolumna] < wiersz*kolumna)
+                {
+                    iloscKomorek++;
+                }
+            }
+        } 
+        
+        /*drukowanie
+        for (int wiersz = 0; wiersz < tablicaKwadratowa.length; wiersz++){
+            for (int kolumna = 0; kolumna < tablicaKwadratowa[wiersz].length; kolumna++){
+                    System.out.print((tablicaKwadratowa[wiersz][kolumna]) + " | ");
+            }
+            System.out.println();
+        } 
+        */
+        
+        System.out.println("Iloœæ komórek, których wartoœæ jest mniejsza od iloczynu ideksów: " + iloscKomorek);
+    }
+    
+}

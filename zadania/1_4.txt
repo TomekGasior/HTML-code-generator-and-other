@@ -1,0 +1,49 @@
+/*
+4. Napisaæ program, który wczytuje dwie liczby naturalne oznaczaj¹ce numer roku i wyœwietlaj¹cy ³¹czn¹
+liczbê dni od 1 stycznia pierwszego podanego roku do 31 grudnia drugiego podanego roku. Nale¿y
+uwzglêdniæ lata przestêpne. Rok jest przestêpny je¿eli jest podzielny przez 4, ale nie jest podzielny przez
+100, lub jest podzielny przez 400. Lata przestêpne maj¹ 366 dni, natomiast pozosta³e 365.
+Przyk³adowo je¿eli u¿ytkownik poda 2000 i 2007, wynikiem powinno byæ 2922
+(bo 366 + 3 * 365 + 366 + 3 * 365).
+Inny przyk³ad, je¿eli u¿ytkownik poda 1945 i 1945, to wynikiem powinno byæ 365.
+*/
+
+
+package javaapplication4;
+import java.util.Scanner;
+
+public class JavaApplication4 {
+
+    public static void main(String[] args) {
+        
+        short rokPocz = -32768;
+        short rokKon = -32768;
+        long dni = 0;
+        while (rokPocz < -32767)
+        {
+            System.out.print("Podaj rok poczatkowy: ");
+            Scanner strumien = new Scanner(System.in);
+            rokPocz = strumien.nextShort();
+        }
+        while (rokKon < -32767)
+        {
+            System.out.print("Podaj rok koncowy: ");
+            Scanner strumien = new Scanner(System.in);
+            rokKon = strumien.nextShort();
+        }
+        
+        for(;rokPocz <= rokKon;rokPocz++)
+        {
+            if(rokPocz % 4 == 0 && (rokPocz % 100 != 0 || rokPocz % 400 == 0))
+            {
+                dni = dni + 366;
+            }
+            else
+            {
+                dni = dni + 365;
+            }
+        }
+        System.out.println(dni);
+    }
+    
+}

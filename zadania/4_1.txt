@@ -1,0 +1,65 @@
+/*
+1. Napisac funkcje liczZnakiSlowa, która zlicza:
+• liczbe znaków w pliku,
+• liczbe bia³ych znaków w pliku (bia³e znaki to spacja, tabulator, znacznik
+konca wiersza),
+• liczbe s³ów w pliku.
+Wynikiem funkcji jest tablica z³ozona z 3 liczb ca³kowitych po jednej dla wymie-
+nionych podpunktów.
+*/
+
+
+package javaapplication10;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class JavaApplication10 {
+    
+    public static int[] liczZnakiSlowa(String plik) throws IOException {
+        FileReader plikWejsciowy = null;
+        int[] wynik = new int[3];
+        int licznikZnakow = 0;
+        int licznikBialych = 0;
+        int licznikSlow = 0;
+        try {
+            plikWejsciowy = new FileReader(plik);
+            int znak;
+            boolean spacja = false;
+            while ((znak = plikWejsciowy.read()) != -1) {
+                if (znak == ' ' || znak == 9 || znak == '\n'){
+                    licznikBialych++;
+                }
+                if ((znak == ' ' || znak == 9 || znak == '\n') && !spacja && licznikZnakow!=0){
+                    licznikSlow++;
+                    spacja = true;
+                } else
+                {
+                    spacja = false;
+                }
+                licznikZnakow++;
+                //System.out.print((char) znak);
+            }
+            if (!spacja){
+                    licznikSlow++;
+                }
+        } finally {
+            if (plikWejsciowy != null) {
+                plikWejsciowy.close();
+                
+            }
+        }
+                wynik[0] = licznikZnakow;
+                wynik[1] = licznikBialych;
+                wynik[2] = licznikSlow;
+                //System.out.println(licznikZnakow);
+                //System.out.println(licznikBialych);
+                //System.out.println(licznikSlow);
+                return wynik;
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        //przykladow wywolanie - argumentem sciezka pliku
+        liczZnakiSlowa("C:\\Users\\Tomek\\Desktop\\test.txt");
+    }
+}

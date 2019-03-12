@@ -1,0 +1,52 @@
+/*
+3. Napisac funkcje public static void sumujIZapisz(String nazwaPliku) , któ-
+ra odczytuje plik o podanej nazwie zawierajacy liczby ca³kowite (po jednej w
+wierszu). Funkcja ma za zadanie odczytac i zsumowac wszystkie liczby z pliku,
+a nastepnie dopisac na koncu pliku wyznaczona sume powiekszona o 1. Ponow-
+ne uruchomienia funkcji beda skutkowa³y dopisywaniem kolejnych wierszy. Jezeli
+plik nie istnieje to ma zostac utworzony – suma dla pustego pliku wyniesie 0, a
+wiec nalezy dopisac wiersz zawierajacy 1.
+*/
+
+
+package javaapplication14;
+import java.util.Scanner;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.File;
+
+public class JavaApplication14 {
+
+    public static void sumujIZapisz(String nazwaPliku) throws IOException{
+        Scanner odczyt = null;
+        File plik = new File(nazwaPliku);
+        long suma = 0;
+        try{
+            if(plik.exists()){
+        odczyt = new Scanner(new FileReader(nazwaPliku));
+            for(int i =0;odczyt.hasNext();){
+                i = odczyt.nextInt();
+                suma = suma + i;
+            }
+            suma++;
+            FileWriter zapis = new FileWriter(nazwaPliku, true);
+            zapis.write("\r\n" + suma);
+            zapis.close();
+            odczyt.close();
+            }
+            else{
+            File nowy = new File(nazwaPliku);
+            FileWriter zapis = new FileWriter(nowy);
+            zapis.write("1");
+            zapis.close();
+            }
+        }
+        finally{}
+    }
+    
+    public static void main(String[] args) throws IOException {
+        //przyk³adowe wywo³anie
+        sumujIZapisz("C:\\Users\\Tomek\\Desktop\\test.txt");
+    }
+}

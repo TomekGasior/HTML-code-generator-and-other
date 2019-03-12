@@ -1,0 +1,69 @@
+/*
+6. Napisac funkcje, której zadaniem jest odczytanie danych tabelarycznych z pliku
+tekstowego, a nastepnie zapisanie ich do nowego pliku w postaci kodu HTML.
+Przyk³ad:
+Wejscie:
+"Waga" "Wzrost" "BMI" "Nadwaga"
+70 1,8 21,6 "NIE"
+67 1,77 21,39 "NIE"
+85 1,7 29,41 "TAK"
+100 1,92 27,13 "TAK"
+Wynik:
+<html><body>
+<table>
+<tr><td>"Waga"</td><td>"Wzrost"</td><td>"BMI"</td><td>"Nadwaga"
+</td></tr>
+<tr><td>70</td><td>1,8</td><td>21,6</td><td>"NIE"
+</td></tr>
+<tr><td>67</td><td>1,77</td><td>21,39</td><td>"NIE"
+</td></tr>
+<tr><td>85</td><td>1,7</td><td>29,41</td><td>"TAK"
+</td></tr>
+<tr><td>100</td><td>1,92</td><td>27,13</td><td>"TAK"</td></tr>
+</table>
+</body></html>
+*/
+
+
+package javaapplication13;
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileWriter;
+
+public class JavaApplication13 {
+
+    public static void konwertujNaHtml(String nazwaPliku) throws IOException{
+    Scanner odczyt = null;
+    BufferedWriter zapis = null;
+    String html = "<!DOCTYPE html>\n<html><body>\n<table>\n";
+        try{
+        odczyt = new Scanner(new BufferedReader(new FileReader(nazwaPliku)));
+        zapis = new BufferedWriter(new FileWriter(nazwaPliku + ".html"));
+        zapis.write(html);
+            for(String[]pomocnicza;odczyt.hasNext();){
+                pomocnicza = odczyt.nextLine().split(" ");
+                zapis.write("<tr>");
+                for(int i =0; i < pomocnicza.length;i++){
+                    if(i+1!=pomocnicza.length)
+                        zapis.write("<td>" + pomocnicza[i] + "</td>");
+                    else
+                        zapis.write("<td>" + pomocnicza[i] + "\n</td>");    
+                }
+            zapis.write("</tr>\n");
+            }
+            zapis.write("</table>\n</body></html>");
+        }
+        finally{
+            odczyt.close();
+            zapis.close();
+        }
+    }
+    
+    public static void main(String[] args) throws IOException{
+        //przyk³adowe wywo³anie
+        konwertujNaHtml("C:\\Users\\Tomek\\Desktop\\test.txt");
+    }
+}

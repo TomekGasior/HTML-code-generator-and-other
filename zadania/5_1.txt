@@ -1,0 +1,94 @@
+/*
+1. Dany jest plik, w którym zapisano (w postaci wewnêtrznej) kolejne trójki danych tworz¹ce
+informacjê o budynkach:
+• String nazwDom;
+• int lKondygn;
+• double cena;
+Napisaæ funkcjê zmniejszaj¹c¹ (bezpoœrednio w pliku, bez wczytywania ca³ego pliku do
+pamiêci) o 10 procent cenê domów
+parterowych i zwracaj¹c¹ jako wartoœæ nazwê domu (nazwDom) o najwiêkszej liczbie
+kondygnacji (jeœli jest takich wiêcej, to
+dowolny z nich). Nazwa pliku jest przekazana jako parametr funkcji.
+*/
+
+
+package javaapplication15;
+import java.io.RandomAccessFile;
+import java.io.IOException;
+
+public class JavaApplication15 {
+    
+    public static void zapisz(String nazwa) throws IOException {
+        RandomAccessFile plik = null;
+        try {
+            plik = new RandomAccessFile(nazwa, "rw");
+
+            plik.writeUTF("Dom numer 1");
+            plik.writeInt(1);
+            plik.writeDouble(1400.10);
+
+            plik.writeUTF("Dom numer 2");
+            plik.writeInt(5);
+            plik.writeDouble(800.00);
+
+            plik.writeUTF("Dom numer 3");
+            plik.writeInt(10);
+            plik.writeDouble(500.50);
+        } finally {
+            plik.close();
+            
+        }
+    }
+    
+    public static void odczytaj(String nazwa) throws IOException {
+        RandomAccessFile plik = null;
+        try {
+            plik = new RandomAccessFile(nazwa, "rw");
+
+            while (plik.getFilePointer() < plik.length()) {
+                String nazwaDomu = plik.readUTF();
+                int lK = plik.readInt();
+                double cena = plik.readDouble();
+
+                System.out.printf("%s %d %.2f \n", nazwaDomu, lK, cena);
+            }
+        } finally {
+            plik.close();
+        } 
+    }
+    
+    public static String zadanie(String nazwa) throws IOException {
+        RandomAccessFile plik = null;
+        String nazwaDomu = null;
+        int kondygnacjeMaks = 0;
+        try {
+            plik = new RandomAccessFile(nazwa, "rw");
+            
+            while (plik.getFilePointer() < plik.length()) {
+                String nazwaBudynku = plik.readUTF();
+                int liczbaKondygnacji = plik.readInt();
+                if (liczbaKondygnacji > kondygnacjeMaks) {
+                    kondygnacjeMaks = liczbaKondygnacji;
+                    nazwaDomu = nazwaBudynku;
+                }
+                long tmpCena = plik.getFilePointer();
+                double cena = plik.readDouble();
+                if(liczbaKondygnacji == 1) {
+                    plik.seek(tmpCena);
+                    plik.writeDouble(cena*0.9);
+                }
+            } 
+        } finally {
+                plik.close();
+        }
+        //System.out.printf("%s \n", nazwaDomu);
+        return nazwaDomu;
+    }    
+    
+        public static void main(String[] args) throws IOException {
+        //wywo³ania
+        //zapisz("plik.data");
+        zadanie("plik.data");
+        //odczytaj("plik.data");
+    }
+}

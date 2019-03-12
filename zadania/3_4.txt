@@ -1,0 +1,48 @@
+/*
+4. Pierwszy / ostatni.
+Zaimplementowaæ funkcjê void firstlast(String s, char c), która oblicza liczbê znaków znajduj¹cych
+siê pomiêdzy pierwszym i ostatnim wyst¹pieniem znak c w ci¹gu s. Funkcja musi wydrukowaæ na standardowe
+wyjœcie obliczon¹ liczbê znaków oraz tekst znajduj¹cy siê pomiêdzy wspomnianymi wyst¹pieniami znaku c. W
+przypadku, gdy szukany znak nie wystêpuje w podanym ci¹gu lub wystêpuje tylko raz, funkcja powinna przyj¹æ
+odleg³oœæ równ¹ -1.
+Dla nastêpuj¹cych wywo³añ funkcji:
+firstlast(”a12345a6789a”, 'a');
+firstlast(”cccbbccc”, 'b');
+firstlast(”aaaaaa”, 'c');
+na wyjœciu powinien zostaæ wydrukowany tekst:
+Odleg³o : 10. œæ Tekst '12345a6789'
+Odleg³oœæ: 0. Tekst ''
+Odleg³oœæ: 1.
+Tekst ''
+*/
+
+
+package javaapplication8;
+
+public class JavaApplication8 {
+
+    
+    public static void main(String[] args) {
+        
+        //przyk³adowe wywo³ania
+        firstlast("a12345a6789a",'a'); 
+        firstlast("ccbbccc",'b'); 
+        firstlast("aaaaaa",'c'); 
+    }
+    
+    static void firstlast(String s, char c){
+        
+        int pierwsze, ostatnie;
+        pierwsze = s.indexOf(c);
+        ostatnie = s.lastIndexOf(c);
+        
+        if(pierwsze==ostatnie)
+        {
+            System.out.println("Odleglosc: -1. Tekst ''");
+        }
+        else
+        {
+            System.out.println("Odleglosc: " + (ostatnie-pierwsze-1) + ". Tekst '" + s.substring(pierwsze+1,ostatnie) +"'");
+        }
+    }
+}

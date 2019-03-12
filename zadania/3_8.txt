@@ -1,0 +1,55 @@
+/*
+8. Akronim
+Zaimplementowaæ funkcjê void akronim(String s), która drukuje na standardowym wyjœciu akronim (wyraz
+sztucznie u³o¿ony z pierwszych liter innych wyrazów). Nale¿y pamiêtaæ aby wyjœciowy akronim by³ u³o¿ony wy³¹cznie z
+wielkich liter.
+Uwaga: nie wolno korzystaæ z funkcji standardowej toupper().
+Za³o¿enia: Przekazywany ³añcuch sk³ada siê tylko z poprawnych s³ów oddzielonych pojedyncz¹ spacj¹ (spacje nie
+wystêpuj¹ w ¿adnych innych miejscach).
+Dla nastêpuj¹cych wywo³añ funkcji:
+akronim(”Rzeczpospolita Polska”);
+akronim(”Wydzia³ Informatyki i Nauki o Materia³ach”);
+akronim(”Polski Zwi ¹zek Pi³ki No¿nej”);
+na wyjœciu powinien zostaæ wydrukowany tekst:
+Akronim wyra¿enia 'Rzeczpospolita Polska' to 'RP'
+Akronim wyra¿enia 'Wydzia³ Informatyki i Nauki o Materia³ach' to 'WIINOM'
+Akronim wyra¿enia 'Polski Zwi¹zek Pi³ki No¿nej' to 'PZPN'
+*/
+
+
+package javaapplication9;
+
+public class JavaApplication9 {
+
+    public static void akronim(String s){
+    
+        String wynik = "";
+        String[] a = s.split(" ");
+        
+        
+        for (int i=0; i < a.length; i++){
+            String petla = a[i];
+            char znak = petla.charAt(0);
+            
+            if (znak>='a' && znak<='z'){
+                wynik = wynik + (char)(znak-32);
+            }
+            else
+            {
+                wynik = wynik + petla.charAt(0);
+            }
+        }
+        
+        
+        System.out.println("Akronim wyrazenia " + s + " to: " + wynik);
+    }
+    
+    public static void main(String[] args) {
+        
+        //przyk³adowe wywo³ania
+        akronim("Rzeczpospolita Polska");
+        akronim("Polski Zwi¹zek Pi³ki No¿nej");
+        akronim("Wydzia³ Informatyki i Komunikacji");
+        
+    }
+}

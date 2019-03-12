@@ -1,0 +1,117 @@
+/*
+2. Dany jest plik, w którym zapisano informacje o nieruchomoœciach w postaci kolejnych
+trójek:
+• String nazwDom;
+• int lKondygn;
+• BigDecimal cena;
+Napisaæ funkcjê zwiêkszaj¹c¹ o 15 procent cenê domów 2-piêtrowych i wpisuj¹c¹ dane tych
+domów do pliku tekstowego (dane o jednym domu w jednym wierszu; cena po zmianie) i
+zwracaj¹c¹ jako swoj¹ wartoœæ liczbê domów, których cen nie zmieniono. Nazwy plików s¹
+przekazywane przez parametry funkcji.
+ */
+
+
+package javaapplication5;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+
+public class JavaApplication5 {
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        zapisz("plik.data");
+        odczytaj("plik.data");
+        zadanie2("plik.data");
+    }
+    
+    public static void zapisz(String npl) throws IOException {
+        ObjectOutputStream plikObj = null;
+        try {
+            plikObj = new ObjectOutputStream(new FileOutputStream(npl));
+            
+            plikObj.writeUTF("Nazwa 1");
+            plikObj.writeInt(2);
+            plikObj.writeObject(new BigDecimal(254.23));
+            
+            plikObj.writeUTF("Nazwa 2");
+            plikObj.writeInt(3);
+            plikObj.writeObject(new BigDecimal(531.13));
+            
+            plikObj.writeUTF("Nazwa 3");
+            plikObj.writeInt(1);
+            plikObj.writeObject(new BigDecimal(444.44));
+
+        } finally {
+            if (plikObj != null) {
+                plikObj.close();
+            }
+        }
+    }
+    
+    public static void odczytaj(String npl) throws IOException, ClassNotFoundException {
+        ObjectInputStream plikObj = null;
+        try {
+            plikObj = new ObjectInputStream(new FileInputStream(npl));
+            while(true){
+                String nazwa = plikObj.readUTF();
+                int liczbaKon = plikObj.readInt();
+                Object cena = plikObj.readObject();
+                System.out.println(nazwa + " " + liczbaKon + " " + cena);
+            }
+        } catch (EOFException ex){
+            
+        }finally {
+            if (plikObj != null) {
+                plikObj.close();
+            }
+        }
+    }
+    
+    public static int zadanie2(String npl) throws IOException, ClassNotFoundException {
+        ObjectInputStream plikObjWe = null;
+        PrintWriter PlikWyjsciowy = null;
+        int liczbaDomow = 0;
+        try {
+            plikObjWe = new ObjectInputStream(new FileInputStream(npl));
+            PlikWyjsciowy = new PrintWriter(new FileWriter("wynik.txt", false));
+            while (true) {
+                String nazwa = plikObjWe.readUTF();
+                int liczbaKon = plikObjWe.readInt();
+                Object cena = (BigDecimal)plikObjWe.readObject();
+                if (liczbaKon == 3) {
+                    BigDecimal cenaT = (BigDecimal)cena;
+                    cenaT = cenaT.multiply(new BigDecimal(1.15));
+                    PlikWyjsciowy.append(nazwa +" "+ liczbaKon+" " + cenaT + System.lineSeparator());
+                }
+                else {
+                    liczbaDomow++;
+                }
+            }
+        }
+        catch (EOFException ex){
+            if (plikObjWe != null) {
+                plikObjWe.close();
+            }
+            if (PlikWyjsciowy != null) {
+                PlikWyjsciowy.close();
+            }
+           return liczbaDomow;
+        }
+        finally {
+            if (plikObjWe != null) {
+                plikObjWe.close();
+            }
+            if (PlikWyjsciowy != null) {
+                PlikWyjsciowy.close();
+            }
+           return liczbaDomow;
+        }
+        
+    }
+}

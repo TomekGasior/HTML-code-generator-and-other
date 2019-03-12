@@ -1,0 +1,89 @@
+/*
+2. Napisaæ funkcjê, która w dwuwymiarowej tablicy ³añcuchów znaków (podanej przez parametr) znajduje liczbê
+wyst¹pieñ frazy podanej jako drugi parametr. Jeœli w danej komórce fraza wystêpuje kilkukrotnie, to nale¿y policzyæ
+ka¿de jej wyst¹pienie.
+Funkcja zwraca liczbê wyst¹pieñ frazy. Natomiast dodatkowo wyœwietlona zostaje œredni¹ d³ugoœæ ³añcuchów
+znajduj¹cych siê w tabeli oraz ³añcuch stworzony z konkatenacji trzech pierwszych* znaków ³añcuchów le¿¹cych w
+kolumnach o indeksach podzielnych przez 5 i niepodzielnych przez liczbê przekazan¹ przez trzeci parametr funkcji.
+* Jeœli ³añcuch jest krótszy od 3 znaków, to nale¿y zastosowaæ wszystkie jego znaki.
+*/
+
+
+package javaapplication6;
+
+public class JavaApplication6 {
+
+    public static int iloscWystapien(String[][] przeszukiwanaTablica, String szukanaFraza, int liczba)
+    {
+        int licznik = 0;
+        int licznikZnakow = 0;
+        double srednia = 0;
+        int licznikWystapienFraz = 0;
+        String pomocniczy = "";
+        String trzyPierwsze = "";
+        int a= 0;
+        
+        for(int i = 0; i < przeszukiwanaTablica.length; i++)
+        {
+            for (int j =0; j < przeszukiwanaTablica[i].length;j++)
+            {
+                licznikZnakow = licznikZnakow +  przeszukiwanaTablica[i][j].length();
+                licznik++;
+                
+                //tworzymy dziwna konkatenacje
+                if(j % 5 == 0 && j % liczba != 0)
+                {
+                    if(przeszukiwanaTablica[i][j].length() <= 3){
+                        for(int k = 0; k <przeszukiwanaTablica[i][j].length();k++){
+                            trzyPierwsze = trzyPierwsze + przeszukiwanaTablica[i][j].charAt(k);
+                        }}
+                    else{
+                    for(int k = 0; k < 3;k++){
+                            trzyPierwsze = trzyPierwsze + przeszukiwanaTablica[i][j].charAt(k);
+                        }
+                    }
+                }
+                
+                //liczymy wyst¹pienia fraz
+                for(int k = 0; k <przeszukiwanaTablica[i][j].length();k++){
+                    if(k + szukanaFraza.length() > przeszukiwanaTablica[i][j].length()){
+                        break;
+                    }
+                    pomocniczy = przeszukiwanaTablica[i][j].substring(k,k+szukanaFraza.length());
+                    if(pomocniczy.compareTo(szukanaFraza) == 0)
+                    {
+                        licznikWystapienFraz++;
+                    }
+                }
+            }  
+        }
+     
+        if(licznik != 0){
+            srednia = (double)licznikZnakow/licznik;
+            System.out.println("Srednia dlugosc lancuchow znajdujacych sie w tabeli to: " + srednia);
+        }
+        else{
+            System.out.println("Srednia dlugosc lancuchow znajdujacych sie w tabeli to: 0");
+        }
+        System.out.println("Lancuch stworzony z konkatenacji trzech pierwszych znakow lancuchów lezacych w kolumnach o indeksach podzielnych przez 5 i niepodzielnych przez " + liczba + " to: " + trzyPierwsze);
+        //System.out.println(licznikWystapienFraz); //wypisanie wyniku
+        return licznikWystapienFraz; //zwrocenie wyniku
+    }
+    
+    public static void main(String[] args) {
+        
+        //przyk³adowe wywo³anie
+        String[][] tablica = {{"asdasda","asdasda","asdsd","asdsd","afsd",
+            "asgd","aasd","asfd","xzvxbcx","zcxxzs","asds","asad"},{"assd","asdd"},{"assd","asd"}};
+        iloscWystapien(tablica,"as",3);
+    }
+}
+    
+    public static void main(String[] args) {
+        
+        //przykladowe wywolanie
+        String[][] tablica = {{"asdasda","asdasda","asdsd","asdsd","afsd","asgd","aasd","asfd","xzvxbcx","zcxxzs","asds","asad"},{"assd","asdd"},{"assd","asd"}};
+        iloscWystapien(tablica,"as",3);
+    }
+    
+}

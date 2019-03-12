@@ -1,0 +1,89 @@
+/*
+1. Napisaæ program, który generuje ca³kowite liczby pseudolosowe z zakresu (-50; 100] tak d³ugo, a¿
+zostanie wylosowana liczba 0. W wyniku wykonania programu (bez wykorzystania tablic), powinny na
+konsoli zostaæ wyœwietlone:
+a) najwiêksza i najmniejsza z wylosowanych liczb oraz œrednia liczb parzystych dodatnich.
+b) ci¹g liczb Fibonacciego o wartoœciach mniejszych ni¿ iloczyn wartoœci bezwzglêdnych drugiej co
+do wielkoœci i najmniejszej liczby wylosowanej w pierwszym kroku.
+*/
+
+
+package javaapplication1;
+import java.util.Random;
+
+public class JavaApplication1 {
+
+    public static int fibonaczi(int n) {
+        
+        int element1 = 0; 
+        int element2 = 1; 
+        int wynik = 0; 
+
+        if (n < 2) 
+        {
+            return n;
+        }
+        for(int i = 2; i <= n; i++)
+        {
+            wynik = element1 + element2; 
+            element1 = element2; 
+            element2 = wynik;  
+        }
+        return wynik;
+    }
+    
+    public static void main(String[] args) {
+       
+        int maximum = -50;
+        int minimum = 101;
+        int maximum2 = 101;
+        double srednia = 0;
+        int licznikSredniej = 0;
+        
+        for(int i = 1 ;i != 0;)
+        {
+            //generowanie liczb
+            Random r = new Random();
+            i = r.nextInt(150) - 49;
+            //System.out.println(i);
+            //sprawdzanie maximum
+            if(i > maximum)
+            {
+                maximum2 = maximum;
+                maximum = i;
+            }
+            //sprawdzanie minimum
+            if(i < minimum)
+            {
+                minimum = i;
+            }
+            //srednia
+            if(i > 0 && i % 2 == 0)
+            {
+                srednia = srednia + i;
+                licznikSredniej++;
+            }
+        }
+        //Wypisanie min, max i srednia(podpunkt a))
+            System.out.println("Najwieksza wylosowana liczba to: " + maximum);
+            System.out.println("Najmniejsza wylosowana liczba to: " + minimum);
+            srednia = srednia/(double)licznikSredniej;
+            System.out.println("Srednia liczb parzystych dodatnich: " + srednia);
+        //podpunkt b)
+            if(minimum < 0)
+            {
+                minimum = -minimum;
+            }
+            if(maximum2 < 0)
+            {
+                maximum2 = -maximum2;
+            }
+            int iloczyn = minimum*maximum2;
+            System.out.println("Poczatek ciagu Fibbonacciego: ");
+            for(int i=0; fibonaczi(i) < iloczyn; i++)
+            {
+                System.out.println("F(" + i + ") = " + fibonaczi(i));
+            }
+    }
+    
+}

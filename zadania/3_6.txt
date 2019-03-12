@@ -1,0 +1,44 @@
+/*
+6. Odwróæ liczbê
+Zaimplementowaæ funkcjê z dwoma parametrami (liczby ca³kowita). W funkcji nale¿y wyznaczyæ modu³ pierwszej
+liczby, a nastêpnie odwróci kolejnoœæ cyfr, z których sk³ada wyznaczony modu³. W funkcji powinna zostaæ zwrócona
+nowo powsta³a liczba, a dodatkowo poprzez drugi parametr suma pierwotnej i nowej liczby.
+Uwaga: Nie wolno korzystaæ z funkcji dokonuj¹cych konwersji liczby na ³añcuch znaków (szeroko rozumiany) i
+³añcuchów znaków na liczby.
+Przyk³ad:
+5327
+Zwrócone zostanie:
+7235
+12562
+*/
+
+
+package javaapplication7;
+
+public class JavaApplication7 {
+
+    public static void odwrocLiczbe(long pierwsza){
+        
+        long modul = Math.abs(pierwsza);
+        long suma = pierwsza;
+        long wyjscie = 0;
+        long pomocnicza ;
+        
+        while (modul!=0){
+            pomocnicza = modul%10;
+            wyjscie = wyjscie*10 + pomocnicza;
+            modul=modul/10;
+        }
+        
+        suma = suma + wyjscie;
+        System.out.println(wyjscie);
+        System.out.println(suma);
+    }
+    
+    public static void main(String[] args) {
+        
+        //przyk³adowe wywo³anie
+        odwrocLiczbe(-5327);
+    }
+    
+}

@@ -1,0 +1,51 @@
+/*
+3. Napisaæ funkcjê sprawdzaj¹c¹ podzielnoœæ podanej jako parametr liczby (ca³kowitej dodatniej long) przez
+3 metod¹ sumowania cyfr. Je¿eli po pierwszym zsumowaniu cyfr liczby wartoœæ sumy jest wiêksza ni¿ 9,
+sumowanie nale¿y przeprowadziæ powtórnie, itd. Gdy koñcowa suma cyfr jest mniejsza od 10, to funkcja
+koñczy obliczenia i zwraca true (suma jest cyfr¹ 0, 3, 6, 9) lub false (suma jest jedn¹ z pozosta³ych cyfr).
+Przyk³ad:
+liczba: 123454, kolejne sumy: 19-10-1, wynik: false
+liczba: 123453, kolejne sumy: 18-9, wynik: true
+*/
+
+
+package javaapplication3;
+import java.util.Scanner;
+
+public class JavaApplication3 {
+
+    public static short sumaCyfr(long liczba)
+    {
+        short sumaCyfr = 0;
+        while (liczba != 0) 
+        {
+            sumaCyfr += liczba%10;
+            liczba /= 10;
+        }
+        return sumaCyfr;
+    }
+    
+    public static void main(String[] args) {
+        
+        long podanaLiczba = 0;
+        while (podanaLiczba <= 0)
+        {
+            System.out.print("Podaj liczbe calkowita dodatnia: ");
+            Scanner strumien = new Scanner(System.in);
+            podanaLiczba = strumien.nextLong();
+        }
+        short suma = sumaCyfr(podanaLiczba);
+        while(suma > 9)
+        {
+            suma = sumaCyfr(suma);
+        }
+        if (suma == (short)0 || suma == (short)3 || suma == (short)6 || suma == (short)9)
+        {
+            System.out.println("True");
+        }
+        else
+        {
+            System.out.println("False");
+        }
+    }
+}

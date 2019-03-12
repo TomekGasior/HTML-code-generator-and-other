@@ -1,0 +1,58 @@
+/*
+2. Napisac funkcje:
+public static void szukaj(String nazwaPlikWe, String nazwaPlikWy,
+String slowo)
+której zadaniem jest znalezienie wszystkich wierszy w pliku, które zawieraja szu-
+kane s³owo. Wszystkie wiersze, które zawieraja s³owo powinny zostac zapisane w
+pliku wynikowym wraz z nr wiersza (z pierwszego pliku). Nazwa pierwszego pliku
+zapamietana jest w parametrze nazwaPlikWe, nazwa pliku wynikowego podana
+jest w parametrze nazwaPlikWy, natomiast szukane s³owo w parametrze slowo.
+Przyk³ad - plik wejsciowy:
+Ala ma jutro egzamin z biologii.
+Jan myje auto.
+Eh, jutro kolejny egzamin.
+Nie lubie polityki.
+Jezeli szukanym s³owem by³oby ”egzamin”, to plik wynikowy powinien wygladac
+nastepujaco:
+1: Ala ma jutro egzamin z biologii.
+3: Eh, jutro kolejny egzamin.
+*/
+
+
+package javaapplication12;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.FileReader;
+
+public class JavaApplication12 {
+
+    public static void szukaj(String nazwaPlikWe, String nazwaPlikWy,String slowo) throws IOException {
+        
+        BufferedReader we = null;
+        FileWriter wy = null;
+        
+        try{
+            we = new BufferedReader(new FileReader(nazwaPlikWe));
+            wy = new FileWriter(nazwaPlikWy);
+            
+            long licznik = 0;
+            String wiersz;
+            while((wiersz = we.readLine()) != null){
+                licznik++;
+                if(wiersz.contains(slowo)){
+                    wy.write(licznik + ": " + wiersz + "\r\n");
+                }
+            }
+        }
+        finally{
+            we.close();
+            wy.close();
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        //przyk³adowe wywo³anie
+        szukaj("C:\\Users\\Tomek\\Desktop\\test1.txt","C:\\Users\\Tomek\\Desktop\\test2.txt","egzamin");
+    }
+}
